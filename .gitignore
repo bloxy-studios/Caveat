@@ -39,3 +39,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# python (ml/ + api/)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+# regenerable heavy/temporary ML outputs (lightweight artifact JSONs ARE committed)
+ml/artifacts/amrfinder/
+*.egg-info/

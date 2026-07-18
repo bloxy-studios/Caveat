@@ -1,0 +1,11 @@
+# Caveat API service (depends on ../ml/requirements.txt too)
+fastapi>=0.110
+uvicorn[standard]>=0.27
+pydantic>=2.5
+gradio>=4.0
+# ML runtime (mirror of ml/requirements.txt so the API can import caveat_ml)
+scikit-learn>=1.3
+pandas>=2.0
+numpy>=1.24
+scipy>=1.10
+joblib>=1.3

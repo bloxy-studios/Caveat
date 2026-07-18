@@ -1,0 +1,100 @@
+{
+  "_meta": {
+    "description": "Seed antimicrobial drug knowledge base for Caveat (Klebsiella pneumoniae panel). Curated from AMRFinderPlus class/subclass semantics and standard AMR literature. Intended to be enriched via Tavily (/search + /extract over CARD/DrugBank/NCBI) in a later pass.",
+    "species": "Klebsiella pneumoniae",
+    "evidence_type_key": {
+      "i": "known resistance gene / DNA change detected (curated mechanism for this drug)",
+      "ii": "statistical association only (correlated feature, not a curated cause)",
+      "iii": "no known resistance signal found"
+    }
+  },
+  "drugs": {
+    "meropenem": {
+      "display_name": "Meropenem",
+      "drug_class": "carbapenem",
+      "molecular_target": {"name": "penicillin-binding proteins (cell-wall synthesis)", "genes": ["ftsI", "mrdA", "mrcB"]},
+      "primary_mechanism_families": [
+        {"family": "blaKPC", "mechanism": "class A carbapenemase", "evidence_type": "i"},
+        {"family": "blaNDM", "mechanism": "metallo-beta-lactamase (carbapenemase)", "evidence_type": "i"},
+        {"family": "blaOXA-48-like", "mechanism": "class D carbapenemase", "evidence_type": "i"},
+        {"family": "blaVIM", "mechanism": "metallo-beta-lactamase (carbapenemase)", "evidence_type": "i"},
+        {"family": "blaIMP", "mechanism": "metallo-beta-lactamase (carbapenemase)", "evidence_type": "i"}
+      ],
+      "association_families": ["blaCTX-M", "blaSHV", "blaTEM", "blaCMY"],
+      "intrinsic_genes": [],
+      "mechanism_coverage": "full",
+      "uncovered_mechanisms": ["porin loss (ompK35/ompK36) — chromosomal, not called in AMRFinder gene mode"],
+      "notes": "Carbapenemase genes are the dominant, gene-detectable mechanism. ESBL/AmpC + porin loss can raise MICs without a carbapenemase; absence of a carbapenemase is therefore NOT proof of susceptibility."
+    },
+    "ceftazidime": {
+      "display_name": "Ceftazidime",
+      "drug_class": "third-generation cephalosporin",
+      "molecular_target": {"name": "penicillin-binding protein 3", "genes": ["ftsI"]},
+      "primary_mechanism_families": [
+        {"family": "blaCTX-M", "mechanism": "extended-spectrum beta-lactamase", "evidence_type": "i"},
+        {"family": "blaSHV", "mechanism": "beta-lactamase (ESBL alleles)", "evidence_type": "i"},
+        {"family": "blaTEM", "mechanism": "beta-lactamase (ESBL alleles)", "evidence_type": "i"},
+        {"family": "blaCMY", "mechanism": "plasmid AmpC cephalosporinase", "evidence_type": "i"},
+        {"family": "blaKPC", "mechanism": "carbapenemase (also hydrolyses cephalosporins)", "evidence_type": "i"},
+        {"family": "blaNDM", "mechanism": "carbapenemase (also hydrolyses cephalosporins)", "evidence_type": "i"}
+      ],
+      "association_families": ["blaOXA-1"],
+      "intrinsic_genes": [],
+      "mechanism_coverage": "full",
+      "uncovered_mechanisms": ["ESBL-vs-narrow-spectrum allele resolution is imperfect from gene family alone"],
+      "notes": "blaSHV and blaTEM include both ESBL and non-ESBL alleles; family-level presence can be an association (type ii) rather than a proven cause when the specific allele is unknown."
+    },
+    "gentamicin": {
+      "display_name": "Gentamicin",
+      "drug_class": "aminoglycoside",
+      "molecular_target": {"name": "30S ribosomal subunit (16S rRNA)", "genes": ["rrs", "rpsL"]},
+      "primary_mechanism_families": [
+        {"family": "aac(3)", "mechanism": "aminoglycoside acetyltransferase (gentamicin)", "evidence_type": "i"},
+        {"family": "ant(2'')", "mechanism": "aminoglycoside nucleotidyltransferase", "evidence_type": "i"},
+        {"family": "armA", "mechanism": "16S rRNA methyltransferase (pan-aminoglycoside)", "evidence_type": "i"},
+        {"family": "rmtB", "mechanism": "16S rRNA methyltransferase (pan-aminoglycoside)", "evidence_type": "i"},
+        {"family": "rmtC", "mechanism": "16S rRNA methyltransferase (pan-aminoglycoside)", "evidence_type": "i"}
+      ],
+      "association_families": ["aac(6')", "aph(3')", "aph(6)", "aadA"],
+      "intrinsic_genes": [],
+      "mechanism_coverage": "full",
+      "uncovered_mechanisms": [],
+      "notes": "aac(6') predominantly affects amikacin/tobramycin, not gentamicin — treated as association (type ii) for gentamicin. 16S methyltransferases confer high-level pan-aminoglycoside resistance."
+    },
+    "trimethoprim_sulfamethoxazole": {
+      "display_name": "Trimethoprim-sulfamethoxazole",
+      "drug_class": "folate pathway inhibitor",
+      "molecular_target": {"name": "dihydrofolate reductase + dihydropteroate synthase", "genes": ["folA", "folP"]},
+      "primary_mechanism_families": [
+        {"family": "dfrA", "mechanism": "trimethoprim-insensitive dihydrofolate reductase", "evidence_type": "i"},
+        {"family": "sul1", "mechanism": "sulfonamide-insensitive dihydropteroate synthase", "evidence_type": "i"},
+        {"family": "sul2", "mechanism": "sulfonamide-insensitive dihydropteroate synthase", "evidence_type": "i"},
+        {"family": "sul3", "mechanism": "sulfonamide-insensitive dihydropteroate synthase", "evidence_type": "i"}
+      ],
+      "association_families": [],
+      "intrinsic_genes": [],
+      "mechanism_coverage": "full",
+      "uncovered_mechanisms": [],
+      "notes": "Clinical SXT resistance typically involves the trimethoprim component (dfrA); sul genes contribute the sulfonamide component. dfrA presence is the strongest single signal."
+    },
+    "ciprofloxacin": {
+      "display_name": "Ciprofloxacin",
+      "drug_class": "fluoroquinolone",
+      "molecular_target": {"name": "DNA gyrase + topoisomerase IV", "genes": ["gyrA", "gyrB", "parC", "parE"]},
+      "primary_mechanism_families": [
+        {"family": "qnrA", "mechanism": "plasmid-mediated quinolone resistance (target protection)", "evidence_type": "i"},
+        {"family": "qnrB", "mechanism": "plasmid-mediated quinolone resistance (target protection)", "evidence_type": "i"},
+        {"family": "qnrS", "mechanism": "plasmid-mediated quinolone resistance (target protection)", "evidence_type": "i"},
+        {"family": "aac(6')-Ib-cr", "mechanism": "ciprofloxacin-acetylating variant", "evidence_type": "i"},
+        {"family": "qepA", "mechanism": "quinolone efflux pump", "evidence_type": "i"}
+      ],
+      "association_families": ["oqxAB"],
+      "intrinsic_genes": [],
+      "mechanism_coverage": "partial",
+      "uncovered_mechanisms": [
+        "chromosomal QRDR point mutations in gyrA / parC — NOT called by AMRFinderPlus in Klebsiella gene mode; these are the dominant high-level ciprofloxacin mechanism"
+      ],
+      "notes": "DELIBERATE coverage-honesty case. Plasmid-mediated genes usually confer only low-level resistance; the primary driver (gyrA/parC mutations) is outside our default feature coverage. Absence of plasmid genes must NOT be read as susceptible -> the target gate forces no-call unless a supplementary point-mutation caller (e.g. ResFinder/PointFinder) is added."
+    }
+  }
+}

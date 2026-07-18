@@ -1,0 +1,215 @@
+{
+  "meropenem": {
+    "status": "ok",
+    "n_train": 109,
+    "n_calib_iso": 23,
+    "n_calib_conf": 24,
+    "n_test": 47,
+    "prevalence_R_test": 0.5957446808510638,
+    "balanced_accuracy": 0.8674812030075187,
+    "recall_resistant": 0.8928571428571429,
+    "recall_susceptible": 0.8421052631578947,
+    "f1_resistant": 0.8928571428571429,
+    "auroc": 0.9041353383458647,
+    "pr_auc": 0.8854291716686674,
+    "brier": 0.10723404255319151,
+    "reliability": {
+      "prob_pred": [
+        0.0,
+        0.19999999999999998,
+        1.0
+      ],
+      "prob_true": [
+        0.0,
+        0.5,
+        0.8928571428571429
+      ]
+    },
+    "conformal": {
+      "alpha": 0.1,
+      "target_coverage": 0.9,
+      "coverage_R": 1.0,
+      "coverage_S": 0.8421052631578947,
+      "avg_set_size": 1.127659574468085,
+      "no_call_rate": 0.1276595744680851,
+      "accuracy_on_confident": 0.926829268292683,
+      "n": 47
+    },
+    "ablation": {
+      "grouped_auroc": 0.8966165413533834,
+      "random_auroc": 0.9523076923076923
+    }
+  },
+  "ceftazidime": {
+    "status": "ok",
+    "n_train": 109,
+    "n_calib_iso": 23,
+    "n_calib_conf": 24,
+    "n_test": 47,
+    "prevalence_R_test": 0.851063829787234,
+    "balanced_accuracy": 0.7732142857142856,
+    "recall_resistant": 0.975,
+    "recall_susceptible": 0.5714285714285714,
+    "f1_resistant": 0.9512195121951219,
+    "auroc": 0.8071428571428572,
+    "pr_auc": 0.9389927863946158,
+    "brier": 0.07675791516822049,
+    "reliability": {
+      "prob_pred": [
+        0.2408866986798727,
+        0.8276730555394384,
+        0.9977287741165355
+      ],
+      "prob_true": [
+        0.2,
+        1.0,
+        0.918918918918919
+      ]
+    },
+    "conformal": {
+      "alpha": 0.1,
+      "target_coverage": 0.9,
+      "coverage_R": 1.0,
+      "coverage_S": 1.0,
+      "avg_set_size": 1.9148936170212767,
+      "no_call_rate": 0.9148936170212766,
+      "accuracy_on_confident": 1.0,
+      "n": 47
+    },
+    "ablation": {
+      "grouped_auroc": 0.9214285714285713,
+      "random_auroc": 0.9149797570850203
+    }
+  },
+  "gentamicin": {
+    "status": "ok",
+    "n_train": 109,
+    "n_calib_iso": 23,
+    "n_calib_conf": 24,
+    "n_test": 47,
+    "prevalence_R_test": 0.3404255319148936,
+    "balanced_accuracy": 0.9526209677419355,
+    "recall_resistant": 0.9375,
+    "recall_susceptible": 0.967741935483871,
+    "f1_resistant": 0.9375,
+    "auroc": 0.9455645161290323,
+    "pr_auc": 0.9001828457446809,
+    "brier": 0.04910273009338722,
+    "reliability": {
+      "prob_pred": [
+        0.0,
+        0.053154943957248714,
+        0.888151623706879
+      ],
+      "prob_true": [
+        0.041666666666666664,
+        0.0,
+        0.7894736842105263
+      ]
+    },
+    "conformal": {
+      "alpha": 0.1,
+      "target_coverage": 0.9,
+      "coverage_R": 1.0,
+      "coverage_S": 0.9032258064516129,
+      "avg_set_size": 1.6170212765957446,
+      "no_call_rate": 0.6170212765957447,
+      "accuracy_on_confident": 0.8333333333333334,
+      "n": 47
+    },
+    "ablation": {
+      "grouped_auroc": 0.965725806451613,
+      "random_auroc": 0.975328947368421
+    }
+  },
+  "trimethoprim_sulfamethoxazole": {
+    "status": "ok",
+    "n_train": 109,
+    "n_calib_iso": 23,
+    "n_calib_conf": 24,
+    "n_test": 47,
+    "prevalence_R_test": 0.6382978723404256,
+    "balanced_accuracy": 0.857843137254902,
+    "recall_resistant": 0.8333333333333334,
+    "recall_susceptible": 0.8823529411764706,
+    "f1_resistant": 0.8771929824561403,
+    "auroc": 0.9274509803921569,
+    "pr_auc": 0.9622470924368053,
+    "brier": 0.09421014442384273,
+    "reliability": {
+      "prob_pred": [
+        0.09911677390428297,
+        0.3253730928866409,
+        0.3388059926790534,
+        0.3879006410597228,
+        0.5693851406340635,
+        1.0
+      ],
+      "prob_true": [
+        0.0,
+        0.2857142857142857,
+        0.5,
+        0.3333333333333333,
+        0.5,
+        1.0
+      ]
+    },
+    "conformal": {
+      "alpha": 0.1,
+      "target_coverage": 0.9,
+      "coverage_R": 0.7666666666666667,
+      "coverage_S": 0.8823529411764706,
+      "avg_set_size": 0.9148936170212766,
+      "no_call_rate": 0.0851063829787234,
+      "accuracy_on_confident": 0.8837209302325582,
+      "n": 47
+    },
+    "ablation": {
+      "grouped_auroc": 0.9254901960784314,
+      "random_auroc": 0.9184952978056427
+    }
+  },
+  "ciprofloxacin": {
+    "status": "ok",
+    "n_train": 109,
+    "n_calib_iso": 23,
+    "n_calib_conf": 24,
+    "n_test": 47,
+    "prevalence_R_test": 0.6595744680851063,
+    "balanced_accuracy": 0.4586693548387097,
+    "recall_resistant": 0.3548387096774194,
+    "recall_susceptible": 0.5625,
+    "f1_resistant": 0.4489795918367347,
+    "auroc": 0.4586693548387097,
+    "pr_auc": 0.638417334131248,
+    "brier": 0.3243755778715603,
+    "reliability": {
+      "prob_pred": [
+        0.2231682142123749,
+        0.34958615467956833,
+        0.42550302358862063,
+        0.714285714285714
+      ],
+      "prob_true": [
+        0.7058823529411765,
+        0.5,
+        0.7,
+        0.6111111111111112
+      ]
+    },
+    "conformal": {
+      "alpha": 0.1,
+      "target_coverage": 0.9,
+      "coverage_R": 1.0,
+      "coverage_S": 1.0,
+      "avg_set_size": 2.0,
+      "no_call_rate": 1.0,
+      "accuracy_on_confident": NaN,
+      "n": 47
+    },
+    "ablation": {
+      "grouped_auroc": 0.5141129032258064,
+      "random_auroc": 0.4901315789473685
+    }
+  }
+}
