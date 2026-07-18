@@ -29,11 +29,11 @@ GENT_GENES = ["aac(3)", "ant(2'')", "armA", "rmtB", "rmtC"]
 CIPRO_PLASMID = ["qnrA", "qnrB", "qnrS", "aac(6')-Ib-cr", "qepA"]
 
 
-def _amrfinder_like_frame(families: List[str], partial: bool = False) -> pd.DataFrame:
+def _amrfinder_like_frame(families: List[str], rng: np.random.Generator, partial: bool = False) -> pd.DataFrame:
     rows = []
     for i, fam in enumerate(families):
         cov = 72.0 if (partial and i == 0) else 100.0
-        ident = 88.0 if (partial and i == 0) else float(np.round(99.0 + np.random.rand(), 2))
+        ident = 88.0 if (partial and i == 0) else float(np.round(99.0 + rng.random(), 2))
         rows.append(
             {
                 "gene_symbol": fam,  # round-trips through symbol_to_family
@@ -102,7 +102,7 @@ def _labels_for(fams: set, hidden_qrdr: bool, rng: np.random.Generator) -> Dict[
 
 
 def generate(
-    n_groups: int = 70,
+    n_groups: int = 150,
     seed: int = 13,
 ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.Series, Dict[str, EvidenceList]]:
     """Return (feature_matrix, labels_df[R=1/S=0], groups, evidence_map)."""
@@ -129,7 +129,7 @@ def generate(
                 fams.add(rng.choice(GENE_FAMILIES))
             # near-duplicate members occasionally identical (exercise dedup)
             partial = rng.random() < 0.03
-            per_genome[gid] = _amrfinder_like_frame(sorted(fams), partial=partial)
+            per_genome[gid] = _amrfinder_like_frame(sorted(fams), rng, partial=partial)
             hidden_qrdr = rng.random() < prof["hidden_qrdr_prop"]
             label_rows[gid] = _labels_for(fams, hidden_qrdr, rng)
             group_of[gid] = g

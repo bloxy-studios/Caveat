@@ -8,14 +8,18 @@ service loads a trained artifact bundle and returns a typed `GenomeReport`.
 
 ```bash
 # from repo root
-pip install -r api/requirements.txt
+pip install -r api/requirements.txt                 # REST API (lean)
 python -m caveat_ml.train --data synth --out ml/artifacts   # if not already trained
+uvicorn api.main:app --reload --port 8000           # REST API -> http://localhost:8000/docs
 
-uvicorn api.main:app --reload --port 8000        # REST API  -> http://localhost:8000/docs
-python api/gradio_app.py                          # Gradio demo -> http://localhost:7860
+# optional Gradio demo (extra dep)
+pip install -r api/requirements-demo.txt
+python api/gradio_app.py                             # Gradio -> http://localhost:7860
 ```
 
-Override the artifact location with `CAVEAT_ARTIFACTS=/path/to/artifacts`.
+Config via env:
+- `CAVEAT_ARTIFACTS=/path/to/artifacts` — artifact bundle location.
+- `CAVEAT_CORS_ORIGINS=https://your-app.vercel.app,https://...` — comma-separated allowed origins (defaults to `localhost:3000`).
 
 ## Endpoints
 

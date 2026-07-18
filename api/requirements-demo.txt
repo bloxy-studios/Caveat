@@ -1,0 +1,3 @@
+# Extras for the Gradio demo only (keeps the REST API image lean).
+# Install with: pip install -r api/requirements.txt -r api/requirements-demo.txt
+gradio>=4.0

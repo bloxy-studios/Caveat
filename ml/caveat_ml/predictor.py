@@ -33,6 +33,19 @@ from .target_gate import apply_target_gate
 EvidenceList = List[Dict[str, object]]
 
 
+def _pretty_feature_name(col: str) -> str:
+    """Human-readable label for a raw feature column."""
+    if col.startswith("presence__"):
+        return col[len("presence__"):]
+    if col.startswith("classcount__"):
+        return f"{col[len('classcount__'):].lower()} gene count"
+    if col == "annq__min_identity":
+        return "annotation identity"
+    if col == "annq__any_partial":
+        return "partial annotation flag"
+    return col
+
+
 @dataclass
 class DrugModel:
     drug: str
@@ -78,8 +91,10 @@ class DrugModel:
             note=str(gate_raw["note"]),
         )
 
-        # annotation-quality guard: partial/low-identity hits -> no-call
-        if feature_row.get("annq__any_partial", 0.0) >= 1.0 and call != "no_call":
+        # annotation-quality guard: a PARTIAL/low-identity hit for a determinant
+        # relevant to THIS drug -> no-call. (Per-drug, not a global genome flag:
+        # a shaky hit for another drug's gene must not sink an unrelated call.)
+        if call != "no_call" and self._drug_relevant_partial(evidence_list, kb):
             call, reason = "no_call", "poor_annotation_quality"
 
         evidence_type, supporting, summary = self._explain(feature_row, evidence_list, call, kb)
@@ -132,6 +147,22 @@ class DrugModel:
                     model_contribution=round(coefs.get(f"presence__{fam}", 0.0), 4),
                 )
             )
+        # ---- type i: a curated determinant is present ----
+        if cur_present:
+            if call == "likely_to_work":
+                summary = (
+                    f"Curated determinant(s) present ({', '.join(cur_present)}), but the calibrated "
+                    f"model still predicts susceptibility for {self.display_name} — interpret with "
+                    f"caution and confirm by laboratory testing."
+                )
+            else:
+                summary = (
+                    f"Curated resistance determinant(s) detected: {', '.join(cur_present)}. "
+                    f"This is a known mechanism for {self.display_name}."
+                )
+            return "i", supporting, summary
+
+        # ---- no curated determinant: association (type ii) or nothing (type iii) ----
         for fam in assoc_present:
             ev = ev_by_fam.get(fam, {})
             supporting.append(
@@ -146,29 +177,47 @@ class DrugModel:
                 )
             )
 
-        if cur_present:
-            etype = "i"
-            if call == "likely_to_work":
-                summary = (
-                    f"Curated determinant(s) present ({', '.join(cur_present)}), but the calibrated "
-                    f"model still predicts susceptibility for {self.display_name} — interpret with "
-                    f"caution and confirm by laboratory testing."
+        # the model's own positive drivers (push toward "resistant"), so a
+        # resistant-leaning call is never mislabelled "no known signal" (type iii)
+        listed = {f"presence__{f}" for f in (cur_present + assoc_present)}
+        contribs = {c: coefs.get(c, 0.0) * float(feature_row.get(c, 0.0)) for c in self.feature_columns}
+        drivers = sorted(
+            [(c, v) for c, v in contribs.items() if v > 0.05 and c not in listed],
+            key=lambda kv: kv[1], reverse=True,
+        )[:3]
+        for col, val in drivers:
+            supporting.append(
+                SupportingFeature(
+                    gene=_pretty_feature_name(col),
+                    detail="statistical driver in the model — association, not a curated cause",
+                    curated=False,
+                    model_contribution=round(val, 4),
                 )
-            else:
-                summary = (
-                    f"Curated resistance determinant(s) detected: {', '.join(cur_present)}. "
-                    f"This is a known mechanism for {self.display_name}."
-                )
-        elif assoc_present:
-            etype = "ii"
-            summary = (
-                f"No curated resistance gene for {self.display_name}; decision leans on "
-                f"associated feature(s): {', '.join(assoc_present)}. Association, not proof of cause."
             )
-        else:
-            etype = "iii"
-            summary = f"No known resistance signal for {self.display_name} in the detected features."
-        return etype, supporting, summary
+
+        if assoc_present or (call == "likely_to_fail" and drivers):
+            names = assoc_present + [_pretty_feature_name(c) for c, _ in drivers]
+            summary = (
+                f"No curated resistance gene for {self.display_name}; decision leans on associated "
+                f"signal(s): {', '.join(names) if names else 'model feature pattern'}. "
+                f"Association, not proof of cause."
+            )
+            return "ii", supporting, summary
+
+        summary = f"No known resistance signal for {self.display_name} in the detected features."
+        return "iii", supporting, summary
+
+    def _drug_relevant_partial(self, evidence_list: Optional[EvidenceList], kb: Optional[Dict]) -> bool:
+        """True if a determinant RELEVANT TO THIS DRUG has a partial/low-identity hit."""
+        if not evidence_list:
+            return False
+        relevant = curated_families(self.drug, kb) | association_families(self.drug, kb)
+        for ev in evidence_list:
+            if ev.get("gene") in relevant:
+                pid, pcov = ev.get("pct_identity"), ev.get("pct_coverage")
+                if (pid is not None and pid < 90.0) or (pcov is not None and pcov < 90.0):
+                    return True
+        return False
 
 
 def fit_drug_model(

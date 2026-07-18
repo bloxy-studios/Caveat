@@ -31,6 +31,12 @@ from caveat_ml.schemas import GenomeReport, PredictRequest  # noqa: E402
 
 ARTIFACTS_DIR = os.environ.get("CAVEAT_ARTIFACTS", str(ML_DIR / "artifacts"))
 
+# CORS origins are configurable for deployment: set CAVEAT_CORS_ORIGINS to a
+# comma-separated list (e.g. "https://caveat.vercel.app"). Defaults to local dev.
+_DEFAULT_ORIGINS = ["http://localhost:3000", "http://127.0.0.1:3000"]
+_CORS_ORIGINS = [o.strip() for o in os.environ.get("CAVEAT_CORS_ORIGINS", "").split(",") if o.strip()] \
+    or _DEFAULT_ORIGINS
+
 app = FastAPI(
     title="Caveat — Genome Firewall API",
     version="0.1.0",
@@ -40,10 +46,7 @@ app = FastAPI(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:3000",
-        "http://127.0.0.1:3000",
-    ],
+    allow_origins=_CORS_ORIGINS,
     allow_methods=["*"],
     allow_headers=["*"],
 )
