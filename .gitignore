@@ -39,3 +39,15 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# python (ml/ + api/)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+# trained artifacts are regenerable (`python -m caveat_ml.train`) — not committed
+ml/artifacts/
+!ml/artifacts/.gitkeep
+*.egg-info/
