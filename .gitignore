@@ -47,6 +47,7 @@ __pycache__/
 venv/
 .pytest_cache/
 .ipynb_checkpoints/
-# regenerable heavy/temporary ML outputs (lightweight artifact JSONs ARE committed)
-ml/artifacts/amrfinder/
+# trained artifacts are regenerable (`python -m caveat_ml.train`) — not committed
+ml/artifacts/
+!ml/artifacts/.gitkeep
 *.egg-info/

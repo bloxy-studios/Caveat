@@ -32,17 +32,15 @@
       "molecular_target": {"name": "penicillin-binding protein 3", "genes": ["ftsI"]},
       "primary_mechanism_families": [
         {"family": "blaCTX-M", "mechanism": "extended-spectrum beta-lactamase", "evidence_type": "i"},
-        {"family": "blaSHV", "mechanism": "beta-lactamase (ESBL alleles)", "evidence_type": "i"},
-        {"family": "blaTEM", "mechanism": "beta-lactamase (ESBL alleles)", "evidence_type": "i"},
         {"family": "blaCMY", "mechanism": "plasmid AmpC cephalosporinase", "evidence_type": "i"},
         {"family": "blaKPC", "mechanism": "carbapenemase (also hydrolyses cephalosporins)", "evidence_type": "i"},
         {"family": "blaNDM", "mechanism": "carbapenemase (also hydrolyses cephalosporins)", "evidence_type": "i"}
       ],
-      "association_families": ["blaOXA-1"],
+      "association_families": ["blaOXA-1", "blaSHV", "blaTEM"],
       "intrinsic_genes": [],
       "mechanism_coverage": "full",
       "uncovered_mechanisms": ["ESBL-vs-narrow-spectrum allele resolution is imperfect from gene family alone"],
-      "notes": "blaSHV and blaTEM include both ESBL and non-ESBL alleles; family-level presence can be an association (type ii) rather than a proven cause when the specific allele is unknown."
+      "notes": "Generic blaSHV and blaTEM family presence is treated as an ASSOCIATION (type ii), not a curated cause: both families include ESBL and non-ESBL alleles, so family-level detection does not prove a cephalosporin-resistant genotype without allele-level confirmation."
     },
     "gentamicin": {
       "display_name": "Gentamicin",

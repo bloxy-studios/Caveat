@@ -9,7 +9,7 @@ service loads a trained artifact bundle and returns a typed `GenomeReport`.
 ```bash
 # from repo root
 pip install -r api/requirements.txt                 # REST API (lean)
-python -m caveat_ml.train --data synth --out ml/artifacts   # if not already trained
+python -m caveat_ml.train --data synth --out ml/artifacts   # REQUIRED: artifacts aren't committed
 uvicorn api.main:app --reload --port 8000           # REST API -> http://localhost:8000/docs
 
 # optional Gradio demo (extra dep)
